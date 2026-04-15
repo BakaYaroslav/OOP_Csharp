@@ -27,7 +27,7 @@ namespace OOP_Csharp
         }
 
         // Arvutatud omadus (ainult lugemiseks / getter)
-        public int Vanus =>sünniaasta== 0 ? 0 : DateTime.Now.Year - sünniaasta;
+        public int Vanus => sünniaasta == 0 ? 0 : DateTime.Now.Year - sünniaasta;
 
 
         // Tegevus ehk meetod
