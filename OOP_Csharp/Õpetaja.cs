@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OOP_Csharp
 {
-    public class Õpetaja : Isik, ITööline
+    public class Õpetaja : Isik, ITööline, IHindaja
     {
         public string Aine { get; set; }
 
@@ -23,10 +23,14 @@ namespace OOP_Csharp
             Console.WriteLine($"{Nimi} õpetab ainet: {Aine}.");
         }
 
-        public double ArvutaPalk()
+        public virtual double ArvutaPalk()
         {
             Console.WriteLine($"Õpetaja palk on: {Tunnitasu * Tunnidkuus}");
             return Tunnitasu * Tunnidkuus;
+        }
+        public void Hinda(string hinne)
+        {
+            Console.WriteLine($"Õpetaja paneb: {hinne}");
         }
 
 

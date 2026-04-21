@@ -26,6 +26,23 @@ namespace OOP_Csharp
                 isik.Kirjelda();
             }
         }
+
+        public void OtsiNimeJärgi(string otsitavNimi)
+        {
+
+            Console.WriteLine($"OTSINGU TULEMUSED (päring {otsitavNimi})");
+            bool leitud = false;
+
+            foreach (var isik in inimesed)
+            {
+                if (isik.Nimi.Contains(otsitavNimi, StringComparison.OrdinalIgnoreCase))
+                {
+                    isik.Kirjelda();
+                    Console.WriteLine("--------");
+                    leitud = true;
+                }
+            }
+        }
     }
 
    
