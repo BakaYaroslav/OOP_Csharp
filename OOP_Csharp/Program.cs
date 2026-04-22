@@ -1,4 +1,5 @@
 ﻿using System.Net.WebSockets;
+using System.Xml;
 
 namespace OOP_Csharp
 {
@@ -23,7 +24,7 @@ namespace OOP_Csharp
 
             //Õpetajad
             string[] õpetajaNimed = { "Marina", "Aleksei", "Katrin", "Dmitri", "Liisa" };
-            int[] õpetajaSünniaastad = { 1975, 1982, 1990, 1995, 1988 };
+            int[] õpetajaSünniaastad = { 1975, 1982, 1990, 1995, 2000 };
             string[] ained = { "programmeerimine", "matemaatika", "füüsika", "keemia", "eesti keel" };
             double[] tunnitasud = { 13.8, 15.0, 12.5, 14.2, 16.0 };
             int[] tunnidKuus = { 120, 130, 140, 150, 160 };
@@ -55,9 +56,10 @@ namespace OOP_Csharp
             palgasaajad.Add(direktor);
             direktor.ArvutaPalk();
             direktor.Kirjelda();
+         
 
             Console.WriteLine("=======================================================");
-            for ( int i = 0; i < 10; i++)
+            for ( int i = 0; i < 20; i++)
             {
                
                 int randomIsik = rnd.Next(0, 3);
@@ -100,12 +102,13 @@ namespace OOP_Csharp
                         õpilane.ArvutaPalk();
                         minuKool.LisaInimene(õpilane);
                         palgasaajad.Add(õpilane);
-                        Console.WriteLine("===================================================");
+                      
                         break;
-
-                   
-
-
+                       
+                    
+                    
+                    
+                    
                     case Õpetaja:
 
                         Õpetaja õpetaja = new Õpetaja();
@@ -124,8 +127,16 @@ namespace OOP_Csharp
                     default:
                         break;
                 }
-              
+               
             }
+            Console.WriteLine("===================KONSTRUKTORIGA======================");
+            Õpilane õpilane1 = new Õpilane(õpilasNimed[rnd.Next(1, 5)],
+                koolid[rnd.Next(1, 3)],
+                klassid[rnd.Next(1, 12)],
+                vormid[rnd.Next(vormid.Length)]);
+
+            õpilane1.Kirjelda();
+            Console.WriteLine("=======================================================");
             Console.WriteLine("---VÄLJAMAKSED---");
             foreach (ITööline isik in palgasaajad)
             {
@@ -134,32 +145,85 @@ namespace OOP_Csharp
 
             }
 
+            List<Isik> uuedInimesed = new List<Isik>();
+
+            Console.WriteLine("Võetsi vastu nii palju inimesed: ");
+
+            for (int i = 0; i < rnd.Next(10, 30); i++)
+            {
+
+                Õpilane õpilane = new Õpilane();
+                õpilane.Nimi = õpilasNimed[rnd.Next(1, 5)];
+                õpilane.Sünniaasta = õpilasSünniaastad[rnd.Next(1, 5)];
+                õpilane.Kool = koolid[rnd.Next(1, 3)];
+                õpilane.Klass = klassid[rnd.Next(1, 12)];
+                õpilane.Keskminehinne = rnd.NextDouble() * 5;
+                õpilane.Puudumised = puudumised[rnd.Next(1, 5)];
+                õpilane.SotsiaalAmet = rnd.Next(2) == 0;
+                õpilane.Staatus = vormid[rnd.Next(vormid.Length)];
+                õpilane.Kirjelda();
+                uuedInimesed.Add(õpilane);
+                
+            }
+        
+           
+           
+
             Console.WriteLine("================MINU KOOL==================");
+            Console.WriteLine($"Koolis on hetkel süsteemis registreeritud {Isik.InimesteKoguarv} isikut.");
             minuKool.KuvaKõik();
-            Console.Write("Kas sa tahad ostida keegi?: ");
-            string Nimi = Console.ReadLine();
-            minuKool.OtsiNimeJärgi(Nimi);
-            //Õpetaja õpetaja1 = new Õpetaja();
-            //õpetaja1.Nimi = "Marina";
-            //õpetaja1.Sünniaasta = 1995;
-            //õpetaja1.Aine = "programmeerimine";
-            //õpetaja1.Kirjelda();
-            //õpetaja1.Õpeta();
-            //õpetaja1.Tunnitasu = 13.8;
-            //õpetaja1.Tunnidkuus = 140;
-            //õpetaja1.ArvutaPalk();
-            //Console.WriteLine("===================================================");
-            //Õpilane õpilane1 = new Õpilane();
-            //õpilane1.Nimi = "Yaroslav";
-            //õpilane1.Sünniaasta = 2008;
-            //õpilane1.Kool = "TTHK";
-            //õpilane1.Klass = 1;
-            //õpilane1.Kirjelda();
-            //õpilane1.Õpi();
-            //õpilane1.Keskminehinne = 4;
-            //õpilane1.Puudumised = 13;
-            //õpilane1.SotsiaalAmet = true;
-            //õpilane1.ArvutaPalk();
-        }
+            Console.WriteLine("==============UUED INIMESED=============");
+            minuKool.LisaInimene(uuedInimesed);
+            Console.WriteLine("=============LISAMISE PÄRAST===============");
+            minuKool.KuvaKõik();
+           
+            Console.Write("Kas sa tahad ostida keegi? jah/ei: ");
+            string valik = Console.ReadLine();
+            if (valik == "jah")
+            {
+                string Andmed = Console.ReadLine();
+
+                if (int.TryParse(Andmed, out int sünniaasta))
+                {
+
+                    minuKool.Otsi(sünniaasta);
+                }
+                else
+                {
+
+                    minuKool.Otsi(Andmed);
+                }
+            }
+            Console.WriteLine("kuhu sa tahad salvesta kõik andmed koolist(pole .txt):   ");
+            string failinimi = Console.ReadLine();
+            minuKool.SalvestaFaili(failinimi);
+            
+
+           
+
+
+
+                //Õpetaja õpetaja1 = new Õpetaja();
+                //õpetaja1.Nimi = "Marina";
+                //õpetaja1.Sünniaasta = 1995;
+                //õpetaja1.Aine = "programmeerimine";
+                //õpetaja1.Kirjelda();
+                //õpetaja1.Õpeta();
+                //õpetaja1.Tunnitasu = 13.8;
+                //õpetaja1.Tunnidkuus = 140;
+                //õpetaja1.ArvutaPalk();
+                //Console.WriteLine("===================================================");
+                //Õpilane õpilane1 = new Õpilane();
+                //õpilane1.Nimi = "Yaroslav";
+                //õpilane1.Sünniaasta = 2008;
+                //õpilane1.Kool = "TTHK";
+                //õpilane1.Klass = 1;
+                //õpilane1.Kirjelda();
+                //õpilane1.Õpi();
+                //õpilane1.Keskminehinne = 4;
+                //õpilane1.Puudumised = 13;
+                //õpilane1.SotsiaalAmet = true;
+                //õpilane1.ArvutaPalk();
+            }
     }    
 }

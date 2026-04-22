@@ -14,9 +14,18 @@ namespace OOP_Csharp
 
         public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Palk;
 
-        public override void Kirjelda()
+        public Õpetaja() : base() { }
+        public Õpetaja(string aine, double tunnitasu, int tunnikuus)
         {
-            Console.WriteLine($"Mina olen õpetaja {Nimi} ja ma õpetan: {Aine}.");
+            Aine = aine;
+            Tunnitasu = tunnitasu;
+            Tunnidkuus = tunnikuus;
+        }
+
+        public override string Kirjelda()
+        {
+            string Õpetaja_kirjelda = $"Mina olen õpetaja {Nimi} ja ma õpetan: {Aine}.";
+            return Õpetaja_kirjelda;
         }
         public void Õpeta()
         { 

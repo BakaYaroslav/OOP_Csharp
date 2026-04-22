@@ -9,9 +9,10 @@ namespace OOP_Csharp
         public string Eriala { get; set; }
         public string Kuurs { get; set; }
 
-        public override void Kirjelda()
+        public override string Kirjelda()
         {
-            Console.WriteLine($"Üliõpilane {Nimi} õpib {Kuurs}. Kuursusel. Vorm: {Staatus}");
+            string üli_õpilane = $"Üliõpilane {Nimi} õpib {Kuurs}. Kuursusel. Vorm: {Staatus}";
+            return üli_õpilane;
         }
     }
 }

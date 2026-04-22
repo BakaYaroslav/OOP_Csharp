@@ -19,11 +19,20 @@ namespace OOP_Csharp
 
         public Õppevorm Staatus { get; set; } = Õppevorm.Päevane;
 
-      
+        public Õpilane() : base() {  }
 
-        public override void Kirjelda()
+        public Õpilane(string nimi, string kool, int klass, Õppevorm staatus) : base(nimi)
         {
-            Console.WriteLine($"{Nimi} õpib {Klass}. klassis. Vorm: {Staatus}");
+            Kool = kool;
+            Klass = klass;
+            Nimi = nimi;
+            Staatus = staatus;
+        }
+
+        public override string Kirjelda()
+        {
+            string õpilane_kirjelda = $"{Nimi} õpib {Klass}. klassis. Vorm: {Staatus}. Kool: {Kool}.";
+            return õpilane_kirjelda;
         }
 
 

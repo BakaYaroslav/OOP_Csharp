@@ -7,13 +7,24 @@ namespace OOP_Csharp
 
     public abstract class Isik
     {
-        // Privaatne väli - otse ligi ei saa
-        private int sünniaasta;
+       
+        public int sünniaasta;
 
         // Avalik omadus (Property) automaatse get/set logikaga
         public string Nimi { get; set; }
 
+        public static int InimesteKoguarv = 0;
+
+        public Isik(string nimi)
+        {
+            Nimi = nimi;
+
+            // Iga kord, kui luuakse uus isik (käivitub konstruktor), suurendame loendurit
+            InimesteKoguarv++;
+        }
+
         // Kontrollitud omadus
+        public Isik() { InimesteKoguarv++; }
         public int Sünniaasta
         {
             get { return sünniaasta; }
@@ -47,7 +58,7 @@ namespace OOP_Csharp
 
 
         // Abstraktne meetod – sisu puudub, alamklassid PEAVAD selle ise looma
-        public abstract void Kirjelda();
+        public abstract string Kirjelda();
     }
 
 }
