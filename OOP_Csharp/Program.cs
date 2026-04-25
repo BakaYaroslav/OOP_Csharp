@@ -14,6 +14,7 @@ namespace OOP_Csharp
 
             Koolihaldus minuKool = new Koolihaldus();
             List<ITööline> palgasaajad = new List<ITööline>();
+           
             Random rnd = new Random();
             ITööline[] toolised = new ITööline[3]
             {
@@ -29,6 +30,8 @@ namespace OOP_Csharp
             double[] tunnitasud = { 13.8, 15.0, 12.5, 14.2, 16.0 };
             int[] tunnidKuus = { 120, 130, 140, 150, 160 };
             string[] hinne = { "1", "2", "3", "4", "5" };
+            string[] kursused = { "IKTpv_1 (TAR)", "TITpv23", "IKTpv_2 (ITS)", "LOGITpe23", "ROOpv24" };
+
 
             //Õpilased
             string[] õpilasNimed = { "Yaroslav", "Anna", "Peeter", "Maria", "Ivan" };
@@ -42,11 +45,11 @@ namespace OOP_Csharp
 
             //Direktor
             double[] lisatasu = { 100, 200, 300, 400, 500};
-           
 
+           
             Õppevorm[] vormid = (Õppevorm[])Enum.GetValues(typeof(Õppevorm)); // teeb list õppevormist
 
-
+            Console.WriteLine("=================DIREKTOR==================");
             Direktor direktor = new Direktor();
             direktor.Nimi = õpetajaNimed[rnd.Next(1, 5)];
             direktor.Sünniaasta = õpetajaSünniaastad[rnd.Next(1, 5)];
@@ -58,7 +61,7 @@ namespace OOP_Csharp
             direktor.Kirjelda();
          
 
-            Console.WriteLine("=======================================================");
+           
             for ( int i = 0; i < 20; i++)
             {
                
@@ -67,6 +70,7 @@ namespace OOP_Csharp
                 switch (tooline)
                 {
                     case Üliõpilane:
+                        Console.WriteLine("=================ÜLIÕPILANE==================");
                         Üliõpilane üliõpilane = new Üliõpilane();
                         üliõpilane.Nimi = õpilasNimed[rnd.Next(1, 5)];
                         üliõpilane.Sünniaasta = õpilasSünniaastad[rnd.Next(1, 5)];
@@ -81,19 +85,19 @@ namespace OOP_Csharp
                         üliõpilane.Õpi();
                         üliõpilane.ArvutaPalk();
                         palgasaajad.Add(üliõpilane);
-                        Console.WriteLine("===================================================");
+                      
                         break;
 
 
                     case Õpilane:
-
+                        Console.WriteLine("=================ÕPILANE==================");
                         Õpilane õpilane = new Õpilane();
-                        õpilane.Nimi = õpilasNimed[rnd.Next(1, 5)];
-                        õpilane.Sünniaasta = õpilasSünniaastad[rnd.Next(1, 5)];
-                        õpilane.Kool = koolid[rnd.Next(1, 3)];
-                        õpilane.Klass = klassid[rnd.Next(1, 12)];
+                        õpilane.Nimi = õpilasNimed[rnd.Next(1, õpilasNimed.Length)];
+                        õpilane.Sünniaasta = õpilasSünniaastad[rnd.Next(1, õpilasSünniaastad.Length)];
+                        õpilane.Kool = koolid[rnd.Next(1, koolid.Length)];
+                        õpilane.Klass = klassid[rnd.Next(1, klassid.Length)];
                         õpilane.Keskminehinne = rnd.NextDouble() * 5;
-                        õpilane.Puudumised = puudumised[rnd.Next(1, 5)];
+                        õpilane.Puudumised = puudumised[rnd.Next(1, puudumised.Length)];
                         õpilane.SotsiaalAmet = rnd.Next(2) == 0; // random bool
                         õpilane.Staatus = vormid[rnd.Next(vormid.Length)];
 
@@ -110,25 +114,28 @@ namespace OOP_Csharp
                     
                     
                     case Õpetaja:
-
+                        Console.WriteLine("=================ÕPETAJA==================");
                         Õpetaja õpetaja = new Õpetaja();
-                        õpetaja.Nimi = õpetajaNimed[rnd.Next(1, 5)];
-                        õpetaja.Sünniaasta = õpetajaSünniaastad[rnd.Next(1, 5)];
-                        õpetaja.Aine = ained[rnd.Next(1, 5)];
-                        õpetaja.Tunnitasu = tunnitasud[rnd.Next(1, 5)];
-                        õpetaja.Tunnidkuus = tunnidKuus[rnd.Next(1, 5)];
+                        õpetaja.Nimi = õpetajaNimed[rnd.Next(1, õpetajaNimed.Length)];
+                        õpetaja.Sünniaasta = õpetajaSünniaastad[rnd.Next(1, õpetajaSünniaastad.Length)];
+                        õpetaja.Aine = ained[rnd.Next(1, ained.Length)];
+                        õpetaja.Tunnitasu = tunnitasud[rnd.Next(1, tunnitasud.Length)];
+                        õpetaja.Tunnidkuus = tunnidKuus[rnd.Next(1, tunnidKuus.Length)];
+                        Kursus kursus = new Kursus(kursused[rnd.Next(0, kursused.Length)], õpetaja);
+                        kursus.KuvaInfo();
                         palgasaajad.Add(õpetaja);
                         õpetaja.Kirjelda();
                         õpetaja.Õpeta();
                         õpetaja.Hinda(hinne[rnd.Next(1, 5)]);
                         minuKool.LisaInimene(õpetaja);
-                        Console.WriteLine("===================================================");
+                     
                         break;
                     default:
                         break;
                 }
                
             }
+           
             Console.WriteLine("===================KONSTRUKTORIGA======================");
             Õpilane õpilane1 = new Õpilane(õpilasNimed[rnd.Next(1, 5)],
                 koolid[rnd.Next(1, 3)],
@@ -176,24 +183,39 @@ namespace OOP_Csharp
             minuKool.LisaInimene(uuedInimesed);
             Console.WriteLine("=============LISAMISE PÄRAST===============");
             minuKool.KuvaKõik();
-           
+            Console.WriteLine("=============AINULT ÕPILASED===============");
+            minuKool.KuvaAinultÕpilased();
+
             Console.Write("Kas sa tahad ostida keegi? jah/ei: ");
             string valik = Console.ReadLine();
-            if (valik == "jah")
+            try
             {
-                string Andmed = Console.ReadLine();
-
-                if (int.TryParse(Andmed, out int sünniaasta))
+               
+                if (valik == "jah")
                 {
+                    Console.Write("sisesta nimi või sünniaasta: ");
+                    string Andmed = Console.ReadLine();
 
-                    minuKool.Otsi(sünniaasta);
-                }
-                else
-                {
+                    if (int.TryParse(Andmed, out int sünniaasta))
+                    {
 
-                    minuKool.Otsi(Andmed);
+                        minuKool.Otsi(sünniaasta);
+                       
+                    }
+                    else
+                    {
+                        minuKool.Otsi(Andmed);
+                       
+                    }
+                    
                 }
             }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Ei leitud mitte keegi");
+            }
+          
             Console.WriteLine("kuhu sa tahad salvesta kõik andmed koolist(pole .txt):   ");
             string failinimi = Console.ReadLine();
             minuKool.SalvestaFaili(failinimi);

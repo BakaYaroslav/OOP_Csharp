@@ -27,7 +27,7 @@ namespace OOP_Csharp
         }
         public void KuvaKõik()
         {
-            Console.WriteLine("\n--- KOOLI NIMEKIRI ---");
+            
             foreach (var isik in inimesed)
             {
                 // Polümorfism teeb siin imesid! 
@@ -51,6 +51,8 @@ namespace OOP_Csharp
                     leitud = true;
                 }
             }
+            if (!leitud)
+                Console.WriteLine("Ei leitud mitte keegi");
         }
 
         public void Otsi(int sünniaasta)
@@ -67,6 +69,8 @@ namespace OOP_Csharp
                 leitud = true;
             }
             }
+            if (!leitud)
+                Console.WriteLine("Ei leitud mitte keegi");
         }
 
         public void SalvestaFaili(string failinimi)
@@ -75,7 +79,7 @@ namespace OOP_Csharp
             {
                 using (StreamWriter sw = new StreamWriter(failinimi, false, Encoding.UTF8))
                 {
-                    sw.WriteLine($"---Kooli nimekiri (Salvestatud: {DateTime.Now}---");
+                    sw.WriteLine($"---Kooli nimekiri (Salvestatud: {DateTime.Now})---");
 
                     foreach (var isik in inimesed)
                     {
@@ -89,10 +93,19 @@ namespace OOP_Csharp
             {
                 Console.WriteLine($"Viga salvestamisel: {e.Message}");
             }
-           
-            
-            
 
+        }
+
+        public void KuvaAinultÕpilased()
+        {
+            var õpilased = inimesed.OfType<Õpilane>().ToList();
+            foreach (var isik in õpilased)
+            {
+                if (isik is Õpilane)
+                {
+                    Console.WriteLine(isik.Kirjelda());
+                }
+            }
         }
 
 
